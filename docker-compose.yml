@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: book-library
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .   # Use the root directory of your project as the build context
+      #dockerfile: src/Dockerfile  # Specify the relative path to the Dockerfile
+      dockerfile: Dockerfile  # Specify the relative path to the Dockerfile
+    container_name: spring-boot-app
+    ports:
+      - "9091:9091"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/book-library
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      #dockerfile: /frontend/Dockerfile
+      dockerfile: Dockerfile
+    container_name: react-app
+    ports:
+      - "3000:80"
+
+volumes:
+  pgdata:

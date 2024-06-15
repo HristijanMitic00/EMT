@@ -2,6 +2,7 @@ package emt.lab.backend.service.impl;
 
 
 import emt.lab.backend.model.Book;
+import emt.lab.backend.model.Country;
 import emt.lab.backend.model.dto.BookDto;
 import emt.lab.backend.model.Author;
 import emt.lab.backend.model.enumerations.BookCategory;
@@ -41,6 +42,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Optional<Book> save(String name,BookCategory category, Long author, int availableCopies) {
+        //Country c = new Country("Europe", "Europe");
+        //Author a = new Author("NAme","Surname", c);
         Author a = authorRepository.findById(author).orElseThrow(RuntimeException::new);
         Book b = new Book(name,category,a,availableCopies);
         bookRepository.save(b);
