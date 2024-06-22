@@ -2,16 +2,18 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:13
+    image: postgres
     container_name: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: book-library
+      POSTGRES_DB: booklibrary
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    restart: on-failure
+
 
   backend:
     build:
@@ -22,20 +24,23 @@ services:
     ports:
       - "9091:9091"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/book-library
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/booklibrary
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
     depends_on:
       - postgres
 
+
   frontend:
     build:
       context: .
-      #dockerfile: /frontend/Dockerfile
-      dockerfile: Dockerfile
+      dockerfile: /frontend/Dockerfile
+      #dockerfile: Dockerfile
     container_name: react-app
     ports:
       - "3000:80"
+    depends_on:
+      - backend
 
 volumes:
   pgdata:
