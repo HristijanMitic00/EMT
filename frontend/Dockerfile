@@ -9,6 +9,3 @@ FROM nginx:alpine
 COPY --from=build /frontend/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-
-
-# test github action
