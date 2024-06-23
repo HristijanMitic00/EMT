@@ -1,5 +1,3 @@
-
-
 FROM node:16 as build
 WORKDIR /frontend
 COPY ./frontend/package*.json ./
@@ -11,16 +9,3 @@ FROM nginx:alpine
 COPY --from=build /frontend/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-
-
-#FROM node as build
-#WORKDIR /frontend
-#COPY ./frontend/package*.json ./
-#RUN npm install -g npm@10.8.1
-#COPY ./frontend ./
-#RUN npm run build
-#
-#FROM nginx:alpine
-#COPY --from=build /frontend/build /usr/share/nginx/html
-#EXPOSE 80
-#CMD ["nginx", "-g", "daemon off;"]
