@@ -3,7 +3,7 @@ name: publish to Dockerhub
 on:
   push:
     branches:
-      - "main"
+      - "master"
 
 jobs:
   docker:
