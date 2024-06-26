@@ -1,18 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kiii-project-ingress
+  name: nginx-ingress
   namespace: kiii
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: "false"
 spec:
+  ingressClassName: nginx
   rules:
-    http:
+  - http:
       paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: kiii-project-service
-              port:
-                number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kiii-project-service
+            port:
+              number: 80

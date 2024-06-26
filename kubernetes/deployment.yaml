@@ -20,8 +20,8 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kiii-project
-  namespace: kiii
+  name: kiii-project-deployment
+  #namespace: kiii
 spec:
   replicas: 3
   selector:
@@ -37,7 +37,7 @@ spec:
           image: hristijanmitic00/kiii_project:latest
           imagePullPolicy: Always	
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: kiii-project-config
@@ -46,4 +46,4 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: kiii-project-secret
-                  key: postgres
+                  key: password
